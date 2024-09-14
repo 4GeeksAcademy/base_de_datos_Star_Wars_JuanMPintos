@@ -9,32 +9,39 @@ Base = declarative_base()
 
 class User(Base):
     __tablename__ = 'user'
-    userid = Column(Integer, primary_key=True)
-    user_name = Column(String(20), nulleable= False, unique= True)
+    id = Column(Integer, primary_key=True)
+    user_name = Column(String(20), nullable=False, unique= True)
     first_name = Column(String(20), nullable=False)
-    last_name = Column(String(20), nulleable=False)
-    email = Column(String(30), nulleable=False, unique= True)
-    password = Column(String(30), nulleable=False)
-    suscription_date = Column(Datename)
+    last_name = Column(String(20), nullable=False)
+    email = Column(String(30), nullable=False, unique= True)
+    password = Column(String(30), nullable=False)
+    suscription_date = Column(Integer)
+
+    relation_favorites = relationship('Favorites', backref=('user'))
 
 class Character(Base):
     __tablename__ = 'character'
-    characterid = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True)
     character_name = Column(String(30))
+
+    relation_favorites= relationship('Favorites', backref=('character'))
 
 class Planets(Base):
     __tablename__= 'planets'
-    planetsid = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True)
     planet_name = Column(String(30))
 
+    relation_favorites = relationship('Favorites', backref=('planets'))
+
 class Favorites(Base):
-    __tablename__ = ' favorites'
-    favoritesid = Column(Integer, primary_key=True)
-    characterid = Column(Integer)
-    planetsid = Column(Integer)
+    __tablename__ = 'favorites'
+    id = Column(Integer, primary_key=True)
+    characterid = Column(Integer, ForeignKey('character.id'))
+    planetsid = Column(Integer, ForeignKey('planets.id'))
+    user_id = Column(Integer, ForeignKey('user.id'))
 
 
- def to_dict(self):
+    def to_dict(self):
         return {}
 
 ## Draw from SQLAlchemy base
