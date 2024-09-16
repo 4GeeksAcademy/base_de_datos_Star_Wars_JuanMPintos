@@ -13,7 +13,7 @@ class User(Base):
     user_name = Column(String(20), nullable=False, unique= True)
     first_name = Column(String(20), nullable=False)
     last_name = Column(String(20), nullable=False)
-    email = Column(String(30), nullable=False, unique= True)
+    email = Column(String(31), nullable=False, unique= True)
     password = Column(String(30), nullable=False)
     suscription_date = Column(Integer)
 
